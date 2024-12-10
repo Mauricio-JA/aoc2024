@@ -5,6 +5,7 @@ import (
 	"os"
 	"slices"
 	"strings"
+	"time"
 )
 
 func rotateClockwise(direction string) string {
@@ -104,21 +105,19 @@ func main() {
 	}
 	visitedPositions, _ := followPath(guardPosition, mappedArea, maxW, maxH, [2]int{-1, -1})
 	fmt.Println("Part 1", len(visitedPositions))
-
+	
 	countPosibleLoops := 0
-	for i := 0; i < maxW; i++ {
-		for j := 0; j < maxH; j++ {
-			if mappedArea[i][j] == "." {
-				// Se podrá optimizar esto??
-				_, isLoop := followPath(guardPosition, mappedArea, maxW, maxH, [2]int{i, j})
-				if isLoop {
-					countPosibleLoops++
-				}
+	startTime := time.Now()
+	// Se podrá optimizar esto?? Respuesta: SI
+	// Tiempo anterior: 2m6.37s
+	// Tiempo actual: 20.42s
+	for _, position := range visitedPositions{
+			_, isLoop := followPath(guardPosition, mappedArea, maxW, maxH, [2]int{position[0], position[1]})
+			if isLoop {
+				countPosibleLoops++
 			}
-
-		}
 	}
 
-	fmt.Println("Part 2", countPosibleLoops)
+	fmt.Println("Part 2", countPosibleLoops," tooks ", time.Since(startTime))
 
 }
